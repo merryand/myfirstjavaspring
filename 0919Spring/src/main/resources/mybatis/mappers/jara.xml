@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="jaraMapper">
+	<!--jara 테이블의 모든 데이터를 가져오는 SQL -->
+	<select id="allitem" resultType="Jara">
+		select code, itemname, rarity,
+		itemtype, pictureurl from jara
+	</select>
+
+	<!-- code를 가지고 하나의 데이터를 가져오는 SQL -->
+	<select id="itemcode" resultType="Jara"
+		parameterType="java.lang.Integer">
+		select code, itemname, rarity, itemtype, pictureurl from jara where code =
+		#{code}
+	</select>
+</mapper>
