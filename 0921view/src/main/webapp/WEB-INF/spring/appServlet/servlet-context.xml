@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans
+	xmlns="http://www.springframework.org/schema/mvc"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:beans="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
+	<default-servlet-handler />
+
+	<annotation-driven />
+
+	<resources mapping="/resources/**" location="/resources/" />
+
+	<beans:bean id="marshaller"
+		class="org.springframework.oxm.jaxb.Jaxb2Marshaller">
+		<beans:property name="classesToBeBound">
+			<beans:list>
+				<!-- 데이터 list -->
+				<beans:value>com.study.view0921.domain.DataReport</beans:value>
+			</beans:list>
+		</beans:property>
+	</beans:bean>
+
+	<!-- id에는 Controller가 리턴한 뷰이름을 설정 -->
+	<beans:bean id="dataxml"
+		class="org.springframework.web.servlet.view.xml.MarshallingView">
+		<beans:property name="marshaller" ref="marshaller" />
+		<!--value에 출력할 데이터의 attribute 이름을 설정 -->
+		<beans:property name="modelKey" value="dataReport" />
+	</beans:bean>
+
+	<!-- 출력할 뷰를 지정하지 않은 경우 jsp로 출력하도록 해주는 뷰 리졸버 설정 -->
+	<beans:bean
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<beans:property name="prefix" value="/WEB-INF/views/" />
+		<beans:property name="suffix" value=".jsp" />
+		<beans:property name="order" value="1" />
+	</beans:bean>
+
+	<!-- 뷰 이름을 가지고 직접 출력할 뷰를 지정할 수 있도록 하는 뷰 리졸버 설정 -->
+	<beans:bean
+		class="org.springframework.web.servlet.view.BeanNameViewResolver">
+		<beans:property name="order" value="0" />
+	</beans:bean>
+
+	<context:component-scan
+		base-package="com.study.view0921" />
+
+
+
+</beans:beans>
